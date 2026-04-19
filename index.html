@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>障害児育児 制度・助成ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #f7f4f0;
+    --surface: #ffffff;
+    --border:  #e2dbd2;
+    --ink:     #1c1917;
+    --ink2:    #6b6158;
+    --accent:  #b85c38;
+    --accent-l:#fdf0eb;
+    --green:   #3d7a52;
+    --green-l: #eaf4ee;
+    --tag-bg:  #ede8e2;
+    --radius:  10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--ink);
+    padding: 2rem 1.25rem 1.6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.07);
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -20px; right: 20px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.18;
+  }
+  .header h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.35rem;
+    color: #fff;
+    line-height: 1.55;
+    position: relative;
+  }
+  .header-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.5rem;
+    line-height: 1.7;
+    position: relative;
+  }
+  .header-pill {
+    display: inline-block;
+    margin-top: 0.9rem;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    padding: 0.22rem 0.65rem;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  /* ── FILTER ── */
+  .filter-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.85rem 1.1rem;
+  }
+  .filter-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--ink2);
+    margin-bottom: 0.55rem;
+    text-transform: uppercase;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .chip {
+    padding: 0.32rem 0.7rem;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    font-size: 0.73rem;
+    color: var(--ink2);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .chip.on {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .chip:hover:not(.on) { border-color: var(--accent); color: var(--accent); }
+
+  /* ── SEARCH ── */
+  .search-bar {
+    padding: 0.7rem 1.1rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .search-bar input {
+    width: 100%;
+    padding: 0.55rem 0.85rem 0.55rem 2.1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.83rem;
+    background: var(--surface);
+    font-family: inherit;
+    color: var(--ink);
+    outline: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a09088' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 0.7rem center;
+    transition: border-color 0.15s;
+  }
+  .search-bar input:focus { border-color: var(--accent); }
+  .search-bar input::placeholder { color: #bbb3aa; }
+
+  /* ── META BAR ── */
+  .meta-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.7rem;
+    color: var(--ink2);
+  }
+  .meta-bar strong { color: var(--accent); }
+
+  /* ── LIST ── */
+  .list {
+    padding: 0 0.9rem 0.5rem;
+  }
+
+  /* ── ACCORDION ITEM ── */
+  .item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.55rem;
+    overflow: hidden;
+    animation: up 0.25s ease both;
+  }
+  @keyframes up {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .item-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.15s;
+  }
+  .item-trigger:hover { background: var(--bg); }
+
+  .item-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .item-name {
+    flex: 1;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .item-cat {
+    font-size: 0.65rem;
+    color: var(--ink2);
+    margin-top: 0.1rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+  }
+
+  .item-chevron {
+    width: 20px; height: 20px;
+    flex-shrink: 0;
+    color: var(--ink2);
+    transition: transform 0.22s ease;
+  }
+  .item.open .item-chevron { transform: rotate(180deg); }
+
+  /* ── DETAIL PANEL ── */
+  .item-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .item.open .item-detail { max-height: 600px; }
+
+  .detail-inner {
+    border-top: 1px solid var(--border);
+    padding: 0.9rem 1rem 1rem;
+  }
+
+  .amount-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--green-l);
+    color: var(--green);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.28rem 0.65rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+
+  .detail-desc {
+    font-size: 0.82rem;
+    line-height: 1.75;
+    color: var(--ink2);
+  }
+
+  .note-block {
+    margin-top: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    background: var(--accent-l);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.78rem;
+    color: var(--ink2);
+    line-height: 1.65;
+  }
+  .note-block b { color: var(--accent); }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.8rem;
+  }
+  .tag {
+    background: var(--tag-bg);
+    border-radius: 3px;
+    padding: 0.15rem 0.42rem;
+    font-size: 0.67rem;
+    color: var(--ink2);
+  }
+
+  .detail-footer {
+    margin-top: 0.8rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.67rem;
+    color: #b0a8a0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .src-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #c4b8ac;
+    flex-shrink: 0;
+  }
+  .src-dot.community { background: var(--green); }
+
+  /* ── SUGGEST ── */
+  .suggest-wrap {
+    margin: 0.8rem 0.9rem 0;
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    overflow: hidden;
+  }
+  .suggest-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 500;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .suggest-toggle span { flex: 1; }
+  .suggest-toggle .arr { transition: transform 0.2s; color: var(--ink2); font-size: 0.8rem; }
+  .suggest-toggle.open .arr { transform: rotate(180deg); }
+
+  .suggest-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .suggest-body.open { max-height: 700px; }
+
+  .suggest-inner {
+    padding: 0 1rem 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .suggest-inner p {
+    font-size: 0.76rem;
+    color: var(--ink2);
+    line-height: 1.65;
+    padding: 0.6rem 0 0.8rem;
+  }
+  .suggest-inner input,
+  .suggest-inner textarea,
+  .suggest-inner select {
+    width: 100%;
+    margin-bottom: 0.55rem;
+    padding: 0.55rem 0.75rem;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-size: 0.8rem;
+    font-family: inherit;
+    color: var(--ink);
+    background: var(--bg);
+    outline: none;
+    transition: border-color 0.15s;
+    resize: vertical;
+  }
+  .suggest-inner input:focus,
+  .suggest-inner textarea:focus,
+  .suggest-inner select:focus { border-color: var(--accent); }
+  .suggest-inner button {
+    width: 100%;
+    padding: 0.68rem;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-size: 0.83rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s;
+    letter-spacing: 0.03em;
+  }
+  .suggest-inner button:hover { background: var(--accent); }
+  .ok-msg {
+    display: none;
+    margin-top: 0.6rem;
+    background: var(--green-l);
+    color: var(--green);
+    border-radius: 6px;
+    padding: 0.6rem;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  /* ── EMPTY / LOADING ── */
+  .empty { text-align: center; padding: 3rem 1rem; font-size: 0.83rem; color: var(--ink2); }
+  .loading { text-align: center; padding: 2rem; font-size: 0.8rem; color: var(--ink2); }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 2rem;
+    padding: 1.5rem 1.2rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.7rem;
+    color: #b5ada5;
+    line-height: 1.9;
+    text-align: center;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  /* ── SHEET BANNER ── */
+  .sheet-banner {
+    margin: 0.6rem 0.9rem;
+    background: #fffbf0;
+    border: 1px solid #e8d9a0;
+    border-radius: 8px;
+    padding: 0.65rem 0.85rem;
+    font-size: 0.72rem;
+    color: #7a6a30;
+    line-height: 1.6;
+    display: none;
+  }
+  .sheet-banner.show { display: block; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <h1>障害児育児<br>制度・助成ガイド</h1>
+  <p class="header-sub">申請しなければもらえない。案内は来ない。<br>知っているかどうかがすべて。</p>
+  <span class="header-pill">全国共通 ／ 随時更新</span>
+</header>
+
+<div class="filter-bar">
+  <div class="filter-label">カテゴリ</div>
+  <div class="chips" id="chips">
+    <button class="chip on" data-cat="all">すべて</button>
+    <button class="chip" data-cat="手当">💴 手当・お金</button>
+    <button class="chip" data-cat="学校">🏫 学校・教育</button>
+    <button class="chip" data-cat="将来">📋 将来準備</button>
+    <button class="chip" data-cat="手続き">🔄 手続きのコツ</button>
+    <button class="chip" data-cat="口座">🏦 口座・お金管理</button>
+  </div>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="search" placeholder="キーワードで検索（例：年金、口座、学校）">
+</div>
+
+<div class="meta-bar">
+  <span>表示中：<strong id="cnt">0</strong>件</span>
+  <span>※金額は目安。公式窓口で要確認</span>
+</div>
+
+<!-- Googleスプレッドシート連携時の注意バナー -->
+<div class="sheet-banner" id="sheetBanner">
+  📊 Googleスプレッドシートからデータを読み込んでいます...
+</div>
+
+<div class="list" id="list">
+  <div class="loading">読み込み中...</div>
+</div>
+
+<div class="suggest-wrap">
+  <div class="suggest-toggle" id="suggestToggle" onclick="toggleSuggest()">
+    <span>📮 情報を追加・提案する</span>
+    <span class="arr">▼</span>
+  </div>
+  <div class="suggest-body" id="suggestBody">
+    <div class="suggest-inner">
+      <p>「こんな制度もあるよ」「Threadsで見た情報」など、ぜひ教えてください。確認後に一覧に反映します。</p>
+      <input type="text" id="s_title" placeholder="制度・助成の名前 *">
+      <select id="s_cat">
+        <option value="">カテゴリ *</option>
+        <option value="手当">💴 手当・お金</option>
+        <option value="学校">🏫 学校・教育</option>
+        <option value="将来">📋 将来準備</option>
+        <option value="手続き">🔄 手続きのコツ</option>
+        <option value="口座">🏦 口座・お金管理</option>
+        <option value="その他">その他</option>
+      </select>
+      <textarea id="s_desc" rows="3" placeholder="内容・ポイント・気になったこと *"></textarea>
+      <input type="text" id="s_amount" placeholder="金額・補助額（わかれば）">
+      <input type="text" id="s_source" placeholder="情報源（Threads、体験談など）">
+      <button onclick="submitSuggest()">送信する</button>
+      <div class="ok-msg" id="okMsg">✅ ありがとうございます！確認後に反映されます。</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  情報元：<a href="https://note.com/kenzi0722/n/n8760a4103e3b" target="_blank">けんじ note「知らないと損する障害児育児で使える手当・制度」</a>および読者からの寄稿<br>
+  金額・条件は変更される場合があります。必ず各自治体・公式窓口でご確認ください。
+</footer>
+
+<script>
+// ============================================================
+// 📊 Googleスプレッドシート連携
+// シートを公開して以下のURLを貼り替えてください
+// （シート → 共有 → ウェブに公開 → CSV）
+// ============================================================
+const SHEET_CSV_URL = '';
+// 例: 'https://docs.google.com/spreadsheets/d/XXXX/export?format=csv&gid=0'
+
+// ============================================================
+// デフォルトデータ（シートが未設定の場合に使用）
+// ============================================================
+const DEFAULT_DATA = [
+  {
+    title: '特別児童扶養手当',
+    cat: '手当',
+    target: '20歳未満の障害児を育てる父母',
+    amount: '1級：月約58,000円 / 2級：月約38,000円',
+    desc: '精神または身体に障害のある20歳未満の子どもを育てる父母に支給される手当。年3回（4月・8月・12月）まとめて振り込まれる。振込先は申請者（親）名義の口座。',
+    note: '所得制限あり。世帯主収入が基準を超えると支給停止。市役所から案内は来ないので自分で申請しに行く必要がある。',
+    source: 'けんじ note',
+    community: false
+  },
+  {
+    title: '障害児福祉手当',
+    cat: '手当',
+    target: '重度障害・常時介護が必要な20歳未満',
+    amount: '月額約16,000円',
+    desc: '重度の障害があり、日常生活で常時介護が必要な20歳未満の子どもに支給される手当。特別児童扶養手当と同時受給が可能。',
+    note: '市から案内は来ない。振込先口座の名義は自治体によって異なる（子ども名義口座が必要な場合あり）。申請時に窓口で確認を。',
+    source: 'けんじ note',
+    community: false
+  },
+  {
+    title: '就学奨励費',
+    cat: '学校',
+    target: '特別支援学校・支援学級に通う子どもの家庭',
+    amount: '通学費・学用品費・給食費・修学旅行費など',
+    desc: '特別支援学校・支援学級に通う子どもがいる家庭に支給される制度。支援学校・支援学級では学校から案内が来るが、普通学級に通っている場合は自分で申請が必要。',
+    note: 'さかのぼって申請はできない。早めに確認すること。',
+    source: '読者からの情報',
+    community: true
+  },
+  {
+    title: 'ゆうちょ銀行口座を未成年のうちに作る',
+    cat: '口座',
+    target: '重度障害のある子どもの家族',
+    amount: '（将来準備・金銭給付ではない）',
+    desc: '自分で申込用紙が書けない重度障害の場合、18歳以降は実質口座が作れなくなる。将来の障害年金の受け取りには本人名義口座が必要。',
+    note: '未成年のうちに必ず作っておくこと。障害年金は本人名義の口座でないと受け取れない。',
+    source: '読者からの情報',
+    community: true
+  },
+  {
+    title: '子どもの貯金管理は親名義口座で',
+    cat: '口座',
+    target: '将来に備えたい家族',
+    amount: '（管理のコツ・金銭給付ではない）',
+    desc: '子ども名義の口座は、将来本人が手続きできない場合に引き出せなくなるケースがある。日常の貯金管理は親名義口座が安心。',
+    note: '障害年金用の子ども名義口座も別途必要。2つの口座を使い分けるイメージ。成年後見制度でも対応できるが手続きが大変。',
+    source: '読者からの情報',
+    community: true
+  },
+  {
+    title: '学校書類を捨てずに残しておく',
+    cat: '将来',
+    target: '支援学校・支援学級に通う子どもの家族',
+    amount: '（将来準備・金銭給付ではない）',
+    desc: '支援計画や成績表などの学校書類が、将来の障害年金申請の際に証明書類として役立つ場合がある。捨てずに保管しておくことを推奨。',
+    note: 'スキャンしてデジタル保存もあわせて推奨。',
+    source: '読者からの情報',
+    community: true
+  },
+  {
+    title: '区分判定はやり直しができる',
+    cat: '手続き',
+    target: '障害福祉サービスを利用中または検討中の家族',
+    amount: '（手続きのコツ・金銭給付ではない）',
+    desc: '障害福祉サービスの区分判定は、聞き取りを担当する職員の書き方によって結果が変わることがある。納得できない場合はやり直しを申請できる。',
+    note: 'あきらめずに窓口に相談すること。',
+    source: '読者からの情報',
+    community: true
+  }
+];
+
+// ============================================================
+// タグ自動生成（AI的なルールベース）
+// ============================================================
+function autoTags(item) {
+  const tags = [];
+  const text = (item.title + item.desc + item.note + item.cat).toLowerCase();
+  if (text.includes('申請')) tags.push('自己申請必須');
+  if (text.includes('所得制限')) tags.push('所得制限あり');
+  if (text.includes('年金')) tags.push('障害年金');
+  if (text.includes('口座')) tags.push('口座準備');
+  if (text.includes('未成年') || text.includes('18歳')) tags.push('18歳前に対応');
+  if (text.includes('書類') || text.includes('保管')) tags.push('書類保管');
+  if (text.includes('学校') || text.includes('支援学級')) tags.push('支援教育');
+  if (text.includes('重度')) tags.push('重度障害');
+  if (text.includes('案内は来ない') || text.includes('案内が来ない')) tags.push('自分で動く必要あり');
+  if (text.includes('やり直し') || text.includes('再申請')) tags.push('再申請可');
+  if (text.includes('遡及') || text.includes('さかのぼ')) tags.push('遡及不可');
+  if (item.community) tags.push('読者情報');
+  return tags;
+}
+
+// ============================================================
+// カテゴリ → アイコン・背景色
+// ============================================================
+const CAT_STYLE = {
+  '手当':  { emoji: '💴', bg: '#fff4f0' },
+  '学校':  { emoji: '🏫', bg: '#f0f7f2' },
+  '将来':  { emoji: '📋', bg: '#f0f4ff' },
+  '手続き':{ emoji: '🔄', bg: '#fffbf0' },
+  '口座':  { emoji: '🏦', bg: '#f5f0ff' },
+  'その他':{ emoji: '📌', bg: '#f5f5f5' },
+};
+
+// ============================================================
+// CSV パース
+// ============================================================
+function parseCSV(csv) {
+  const lines = csv.trim().split('\n');
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+  return lines.slice(1).map(line => {
+    const vals = line.match(/(".*?"|[^,]+)(?=,|$)/g) || [];
+    const obj = {};
+    headers.forEach((h, i) => {
+      obj[h] = (vals[i] || '').replace(/^"|"$/g, '').trim();
+    });
+    // カラム名を内部キーに変換
+    return {
+      title:     obj['制度名'] || obj['title'] || '',
+      cat:       obj['カテゴリ'] || obj['cat'] || 'その他',
+      target:    obj['対象'] || obj['target'] || '',
+      amount:    obj['金額'] || obj['amount'] || '',
+      desc:      obj['説明'] || obj['desc'] || '',
+      note:      obj['注意点'] || obj['note'] || '',
+      source:    obj['情報源'] || obj['source'] || '情報提供',
+      community: (obj['community'] || '').toLowerCase() === 'true' || obj['情報源'] === '読者'
+    };
+  }).filter(d => d.title);
+}
+
+// ============================================================
+// ストレージ（コミュニティ投稿の保存）
+// ============================================================
+async function loadExtra() {
+  try {
+    const r = await window.storage.get('extra_items');
+    return r ? JSON.parse(r.value) : [];
+  } catch { return []; }
+}
+async function saveExtra(items) {
+  try { await window.storage.set('extra_items', JSON.stringify(items)); } catch {}
+}
+
+// ============================================================
+// 状態
+// ============================================================
+let allData = [];
+let currentCat = 'all';
+let currentSearch = '';
+
+// ============================================================
+// 描画
+// ============================================================
+function render() {
+  const list = document.getElementById('list');
+  let items = allData.filter(d => {
+    const catOk = currentCat === 'all' || d.cat === currentCat;
+    const kw = currentSearch;
+    const searchOk = !kw || [d.title, d.desc, d.note, d.target, d.cat].join(' ').includes(kw);
+    return catOk && searchOk;
+  });
+
+  document.getElementById('cnt').textContent = items.length;
+
+  if (!items.length) {
+    list.innerHTML = '<div class="empty">該当する情報が見つかりませんでした</div>';
+    return;
+  }
+
+  list.innerHTML = items.map((d, i) => {
+    const s = CAT_STYLE[d.cat] || CAT_STYLE['その他'];
+    const tags = autoTags(d);
+    const showAmount = d.amount && !d.amount.includes('ではない') && !d.amount.includes('給付ではない');
+    return `
+    <div class="item" id="item${i}" style="animation-delay:${Math.min(i,10)*0.04}s">
+      <div class="item-trigger" onclick="toggle(${i})">
+        <div class="item-icon" style="background:${s.bg}">${s.emoji}</div>
+        <div class="item-name">
+          ${d.title}
+          <div class="item-cat">${d.cat}${d.target ? ' ・ ' + d.target : ''}</div>
+        </div>
+        <svg class="item-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+      <div class="item-detail">
+        <div class="detail-inner">
+          ${showAmount ? `<div class="amount-row">💰 ${d.amount}</div>` : ''}
+          <div class="detail-desc">${d.desc}</div>
+          ${d.note ? `<div class="note-block"><b>⚠ 注意：</b>${d.note}</div>` : ''}
+          ${tags.length ? `<div class="tag-row">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>` : ''}
+          <div class="detail-footer">
+            <span class="src-dot ${d.community ? 'community' : ''}"></span>
+            ${d.community ? '👥 読者・コミュニティからの情報' : '📝 ' + d.source}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggle(i) {
+  const el = document.getElementById('item' + i);
+  if (!el) return;
+  const wasOpen = el.classList.contains('open');
+  // 他を閉じる
+  document.querySelectorAll('.item.open').forEach(e => e.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+// ============================================================
+// フィルタ・検索
+// ============================================================
+document.getElementById('chips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  chip.classList.add('on');
+  currentCat = chip.dataset.cat;
+  render();
+});
+document.getElementById('search').addEventListener('input', e => {
+  currentSearch = e.target.value;
+  render();
+});
+
+// ============================================================
+// 提案フォーム
+// ============================================================
+function toggleSuggest() {
+  const toggle = document.getElementById('suggestToggle');
+  const body = document.getElementById('suggestBody');
+  toggle.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+async function submitSuggest() {
+  const title = document.getElementById('s_title').value.trim();
+  const cat   = document.getElementById('s_cat').value;
+  const desc  = document.getElementById('s_desc').value.trim();
+  if (!title || !cat || !desc) { alert('名前・カテゴリ・内容は必須です'); return; }
+
+  const item = {
+    title,
+    cat,
+    target: '',
+    amount: document.getElementById('s_amount').value.trim(),
+    desc,
+    note: '',
+    source: document.getElementById('s_source').value.trim() || '読者からの情報',
+    community: true
+  };
+
+  allData.push(item);
+  const extras = await loadExtra();
+  extras.push(item);
+  await saveExtra(extras);
+
+  ['s_title','s_cat','s_desc','s_amount','s_source'].forEach(id => document.getElementById(id).value = '');
+  const ok = document.getElementById('okMsg');
+  ok.style.display = 'block';
+  setTimeout(() => ok.style.display = 'none', 3000);
+  render();
+}
+
+// ============================================================
+// 起動
+// ============================================================
+(async () => {
+  // 1. デフォルトデータ
+  allData = [...DEFAULT_DATA];
+
+  // 2. ローカル投稿を追加
+  const extras = await loadExtra();
+  allData = [...allData, ...extras];
+
+  // 3. Googleスプレッドシートから読み込み（URL設定時）
+  if (SHEET_CSV_URL) {
+    document.getElementById('sheetBanner').classList.add('show');
+    try {
+      const res = await fetch(SHEET_CSV_URL);
+      const csv = await res.text();
+      const sheetData = parseCSV(csv);
+      if (sheetData.length) {
+        allData = [...sheetData, ...extras];
+      }
+    } catch (e) {
+      console.warn('スプレッドシート読み込み失敗:', e);
+    }
+    document.getElementById('sheetBanner').classList.remove('show');
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
